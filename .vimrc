@@ -2,9 +2,8 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/vimfiles/bundle/Vundle.vim/
-let path='~/vimfiles/bundle'
-call vundle#begin(path)
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
 
 
 " let Vundle manage Vundle, required
@@ -99,10 +98,7 @@ inoremap <S-tab> <c-p>
 
 
 " ========= Interface Configuration ========= "
-" set Initial window size
-set lines=32 columns=120
 set ruler background=dark
-set cc=80
 
 " scroll speed
 set scroll=8
@@ -136,3 +132,4 @@ au FileType html setl sw=2 sts=2 et
 au FileType php setl sw=4 sts=4 et
 au FileType python setl sw=4 sts=4 et
 au FileType ruby setl sw=2 sts=2 et
+
