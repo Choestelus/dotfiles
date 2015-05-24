@@ -20,15 +20,33 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'lokaltog/vim-easymotion'
 Plugin 'ervandew/supertab'
 Plugin 'matchit.zip'
+
 " ==== colorschemes ==== "
 Plugin 'vim-scripts/chance-of-storm'
 Plugin 'tomasr/molokai'
 Plugin 'sjl/badwolf'
+Plugin 'farseer90718/flattr.vim'
+Plugin 'GertjanReynaert/cobalt2-vim-theme'
+Plugin 'blerins/flattown'
+Plugin 'sickill/vim-sunburst'
+Plugin 'MaxSt/FlatColor'
+Plugin 'vim-scripts/desertEx'
+Plugin 'mrkn/mrkn256.vim'
+Plugin 'vim-scripts/rdark-terminal'
+Plugin 'vim-scripts/synic.vim'
+Plugin 'vim-scripts/lettuce.vim'
+Plugin 'mopp/mopkai.vim'
+Plugin 'chriskempson/vim-tomorrow-theme'
+Plugin 'cdmedia/itg_flat_vim'
+Plugin 'stulzer/heroku-colorscheme'
+Plugin 'justincampbell/vim-railscasts'
+Plugin 'atelierbram/vim-colors_atelier-schemes'
 
 " ==== syntax highlight ==== "
 Plugin 'xsbeats/vim-blade'
 
 " ==== languages specific ===="
+Plugin 'fatih/vim-go'
 
 " ==== Autocomplete ===="
 Plugin 'MarcWeber/vim-addon-mw-utils'
@@ -124,7 +142,7 @@ let g:airline_powerline_fonts = 1
 set laststatus=2
 
 " colorscheme
-colorscheme badwolf
+colorscheme flatcolor
 
 " ==== Indentations ==== "
 
@@ -136,3 +154,9 @@ au FileType html setl sw=2 sts=2 et
 au FileType php setl sw=4 sts=4 et
 au FileType python setl sw=4 sts=4 et
 au FileType ruby setl sw=2 sts=2 et
+au FileType go setl tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab
+" ==== Go Specific ==== "
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
