@@ -2,9 +2,8 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/vimfiles/bundle/Vundle.vim/
-let path='~/vimfiles/bundle'
-call vundle#begin(path)
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
 
 
 " let Vundle manage Vundle, required
@@ -20,35 +19,25 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'lokaltog/vim-easymotion'
 Plugin 'ervandew/supertab'
 Plugin 'matchit.zip'
-
+Plugin 'mhinz/vim-signify'
 " ==== colorschemes ==== "
 Plugin 'vim-scripts/chance-of-storm'
-Plugin 'tomasr/molokai'
 Plugin 'sjl/badwolf'
-Plugin 'farseer90718/flattr.vim'
-Plugin 'GertjanReynaert/cobalt2-vim-theme'
-Plugin 'blerins/flattown'
-Plugin 'sickill/vim-sunburst'
+Plugin 'chriskempson/base16-vim'
 Plugin 'MaxSt/FlatColor'
-Plugin 'vim-scripts/desertEx'
-Plugin 'mrkn/mrkn256.vim'
-Plugin 'vim-scripts/rdark-terminal'
-Plugin 'vim-scripts/synic.vim'
-Plugin 'vim-scripts/lettuce.vim'
-Plugin 'mopp/mopkai.vim'
-Plugin 'chriskempson/vim-tomorrow-theme'
-Plugin 'cdmedia/itg_flat_vim'
-Plugin 'stulzer/heroku-colorscheme'
-Plugin 'justincampbell/vim-railscasts'
-Plugin 'atelierbram/vim-colors_atelier-schemes'
+Plugin 'fatih/molokai'
 
 " ==== syntax highlight ==== "
 Plugin 'xsbeats/vim-blade'
 
 " ==== languages specific ===="
 Plugin 'fatih/vim-go'
+Plugin 'vim-jp/vim-go-extra'
+Plugin 'nsf/gocode', {'rtp': 'vim/'}
+Plugin 'davidhalter/jedi-vim'
 
 " ==== Autocomplete ===="
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
@@ -77,50 +66,10 @@ filetype plugin on
 set backspace=indent,eol,start
 set fileformat=unix
 
-" ========= Tab autocompletion ========= "
-inoremap <C-Space> <C-x><C-o>
-" remap <tab> to auto-complete
-function InsertTabWrapper()
-
-  " popup menu visible? select next item
-  if pumvisible()
-    return "\<c-n>"
-  endif
-
-  if strpart(getline('.'), 0, col('.') - 1) =~ '\w$'
-
-    if ShouldUseOmniCompletion()
-      return "\<c-x>\<c-o>"
-    endif
-
-    return "\<c-n>"
-
-  endif
-
-  return "\<tab>"
-
-endfunction
-
-function ShouldUseOmniCompletion()
-  let text = strpart(getline('.'), 0, col('.') - 1)
-  let name = synIDattr(synID(line("."), col("."), 1), "name")
-  if text =~ '</$' | return 1 | end
-  if name =~ '^css' | return 1 | end
-  return 0
-endfunction
-
-inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
-inoremap <S-tab> <c-p>
-
-" ========= End tab autocomplete ========= "
-
-
-
 " ========= Interface Configuration ========= "
-" set Initial window size
-set lines=32 columns=120
-set ruler background=dark
-set cc=80
+set t_Co=256
+set background=dark
+set ruler
 
 " scroll speed
 set scroll=8
@@ -134,7 +83,7 @@ set showcmd number
 
 " set fonts
 set encoding=utf-8
-set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h10
+set guifont=Source\ Code\ Pro\ for\ Powerline\ 10,DejaVu\ Sans\ Mono\ for\ Powerline\ 10,DejaVu\ Sans\ Mono\ 10
 
 " airline configurations
 let g:airline_theme='powerlineish'
@@ -142,7 +91,7 @@ let g:airline_powerline_fonts = 1
 set laststatus=2
 
 " colorscheme
-colorscheme flatcolor
+colorscheme molokai
 
 " ==== Indentations ==== "
 
@@ -154,9 +103,24 @@ au FileType html setl sw=2 sts=2 et
 au FileType php setl sw=4 sts=4 et
 au FileType python setl sw=4 sts=4 et
 au FileType ruby setl sw=2 sts=2 et
-au FileType go setl tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab
+"
 " ==== Go Specific ==== "
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_auto_type_info = 1
+let g:go_fmt_command = "goimports"
+
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
 au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
+
+" Show a list of interfaces which is implemented by the type under your cursor
+au FileType go nmap <Leader>s <Plug>(go-implements)
+" Show type info for the word under your cursor
+au FileType go nmap <Leader>i <Plug>(go-info)
+" Rename the identifier under the cursor to a new name
+au FileType go nmap <Leader>e <Plug>(go-rename)
