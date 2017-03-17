@@ -1,75 +1,80 @@
 set nocompatible              " be iMproved, required
-filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim/
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-
-" Keep Plugin commands between vundle#begin/end.
-
-Plugin 'kien/ctrlp.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'L9'
-Plugin 'bling/vim-airline'
-Plugin 'Yggdroot/indentLine'
-Plugin 'lokaltog/vim-easymotion'
-Plugin 'ervandew/supertab'
-Plugin 'matchit.zip'
-Plugin 'mhinz/vim-signify'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'L9'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'Yggdroot/indentLine'
+Plug 'lokaltog/vim-easymotion'
+Plug 'ervandew/supertab'
+Plug 'matchit.zip'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-surround'
+Plug 'tmux-plugins/vim-tmux-focus-events'
 " ==== colorschemes ==== "
-Plugin 'vim-scripts/chance-of-storm'
-Plugin 'sjl/badwolf'
-Plugin 'chriskempson/base16-vim'
-Plugin 'MaxSt/FlatColor'
-Plugin 'fatih/molokai'
+Plug 'sjl/badwolf'
+Plug 'fatih/molokai'
+Plug 'rakr/vim-one'
 
 " ==== syntax highlight ==== "
-Plugin 'xsbeats/vim-blade'
+Plug 'xsbeats/vim-blade'
 
 " ==== languages specific ===="
-Plugin 'fatih/vim-go'
-Plugin 'vim-jp/vim-go-extra'
-Plugin 'nsf/gocode', {'rtp': 'vim/'}
-Plugin 'davidhalter/jedi-vim'
+Plug 'fatih/vim-go'
+Plug 'nsf/gocode', {'rtp': 'vim/'}
+Plug 'davidhalter/jedi-vim'
 
 " ==== Autocomplete ===="
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
-Plugin 'Shougo/vimproc.vim'
-Plugin 'Shougo/unite.vim'
+function! BuildYCM(info)
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !./install.py --gocode-completer --racer-completer --tern-completer --clang-completer
+  endif
+endfunction
 
-"Plugin 'vim-scripts/HTML-AutoCloseTag'
+Plug 'Valloric/YouCompleteMe', {'do': function('BuildYCM')}
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+Plug 'Raimondi/delimitMate'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'garbas/vim-snipmate'
+Plug 'honza/vim-snippets'
+Plug 'Shougo/vimproc.vim'
+Plug 'Shougo/unite.vim'
+
+call plug#end()
+
+
+let g:ycm_global_ycm_extra_conf = '~/.vim/ycm-c-semantics.py'
 
 " ====== key bindings and configuration ====== "
 set backspace=indent,eol,start
 set fileformat=unix
 
+set autoread
+
 " ========= Interface Configuration ========= "
 set t_Co=256
+
+if (has("termguicolors"))
+  set termguicolors
+endif
+
+set t_8b=[48;2;%lu;%lu;%lum
+set t_8f=[38;2;%lu;%lu;%lum
+
 set background=dark
 set ruler
+
+set conceallevel=0
+au FileType * setl cole=0
 
 " scroll speed
 set scroll=8
@@ -86,14 +91,22 @@ set encoding=utf-8
 set guifont=Source\ Code\ Pro\ for\ Powerline\ 10,DejaVu\ Sans\ Mono\ for\ Powerline\ 10,DejaVu\ Sans\ Mono\ 10
 
 " airline configurations
-let g:airline_theme='powerlineish'
+let g:airline_theme='one'
 let g:airline_powerline_fonts = 1
 set laststatus=2
 
+" ===== YCM & preview variables ===== "
+set completeopt=menuone
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_add_preview_to_completeopt = 0
+
+let g:SuperTabClosePreviewOnPopupClose = 1
+
 " colorscheme
-colorscheme molokai
+colorscheme one
 
 " ==== Indentations ==== "
+let delimitMate_expand_cr = 1
 
 " set tab stops
 set shiftwidth=4 tabstop=4 softtabstop=4 expandtab
@@ -103,10 +116,13 @@ au FileType html setl sw=2 sts=2 et
 au FileType php setl sw=4 sts=4 et
 au FileType python setl sw=4 sts=4 et
 au FileType ruby setl sw=2 sts=2 et
+au FileType yml setl sw=2 sts=2 et
 "
 " ==== Go Specific ==== "
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
