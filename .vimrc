@@ -4,13 +4,16 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
-Plug 'L9'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-speeddating'
+" Plug 'L9'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Yggdroot/indentLine'
 Plug 'lokaltog/vim-easymotion'
 Plug 'ervandew/supertab'
-Plug 'matchit.zip'
+" Plug 'matchit.zip'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'
 Plug 'tmux-plugins/vim-tmux-focus-events'
@@ -21,11 +24,20 @@ Plug 'rakr/vim-one'
 
 " ==== syntax highlight ==== "
 Plug 'xsbeats/vim-blade'
+Plug 'cespare/vim-toml'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'guns/vim-clojure-highlight'
+Plug 'vim-scripts/paredit.vim'
 
 " ==== languages specific ===="
+Plug 'elzr/vim-json'
 Plug 'fatih/vim-go'
 Plug 'nsf/gocode', {'rtp': 'vim/'}
 Plug 'davidhalter/jedi-vim'
+Plug 'guns/vim-clojure-static'
+Plug 'tpope/vim-fireplace'
+Plug 'tpope/vim-classpath'
+Plug 'tpope/vim-salve'
 
 " ==== Autocomplete ===="
 function! BuildYCM(info)
@@ -73,16 +85,13 @@ set t_8f=[38;2;%lu;%lu;%lum
 set background=dark
 set ruler
 
-set conceallevel=0
-au FileType * setl cole=0
-
 " scroll speed
 set scroll=8
 
 " set line number and syntax
 set nu
 syntax on
-
+filetype plugin indent on
 " show line number and command being entered
 set showcmd number
 
@@ -94,6 +103,12 @@ set guifont=Source\ Code\ Pro\ for\ Powerline\ 10,DejaVu\ Sans\ Mono\ for\ Power
 let g:airline_theme='one'
 let g:airline_powerline_fonts = 1
 set laststatus=2
+
+" ===== Syntax Configuration ===== "
+let g:vim_json_syntax_conceal = 0
+let g:indentLine_noConcealCursor=""
+" let g:indentLine_color_gui = 239
+" let g:indentLine_color_term = 239
 
 " ===== YCM & preview variables ===== "
 set completeopt=menuone
@@ -116,8 +131,9 @@ au FileType html setl sw=2 sts=2 et
 au FileType php setl sw=4 sts=4 et
 au FileType python setl sw=4 sts=4 et
 au FileType ruby setl sw=2 sts=2 et
-au FileType yml setl sw=2 sts=2 et
-"
+au FileType yaml setl sw=2 sts=2 et
+au FileType json setl et
+
 " ==== Go Specific ==== "
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
@@ -129,10 +145,12 @@ let g:go_highlight_build_constraints = 1
 let g:go_auto_type_info = 1
 let g:go_fmt_command = "goimports"
 
+let g:go_metalinter_autosave = 1
+
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
 au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <leader>c <Plug>(go-coverage)
+au FileType go nmap <leader>c <Plug>(go-coverage-toggle)
 
 " Show a list of interfaces which is implemented by the type under your cursor
 au FileType go nmap <Leader>s <Plug>(go-implements)
