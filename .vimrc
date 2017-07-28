@@ -46,7 +46,7 @@ function! BuildYCM(info)
   " - status: 'installed', 'updated', or 'unchanged'
   " - force:  set on PlugInstall! or PlugUpdate!
   if a:info.status == 'installed' || a:info.force
-    !./install.py --gocode-completer --racer-completer --tern-completer --clang-completer
+    !./install.py --gocode-completer --racer-completer --clang-completer --system-libclang
   endif
 endfunction
 
@@ -61,6 +61,8 @@ Plug 'honza/vim-snippets'
 Plug 'Shougo/vimproc.vim'
 Plug 'Shougo/unite.vim'
 
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 call plug#end()
 
 
