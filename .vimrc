@@ -45,7 +45,7 @@ function! BuildYCM(info)
   " - name:   name of the plugin
   " - status: 'installed', 'updated', or 'unchanged'
   " - force:  set on PlugInstall! or PlugUpdate!
-  if a:info.status == 'installed' || a:info.force
+  if a:info.status != 'unchanged' || a:info.force
     !./install.py --gocode-completer --racer-completer --clang-completer --system-libclang
   endif
 endfunction
@@ -145,9 +145,9 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_auto_type_info = 1
-let g:go_fmt_command = "goimports"
+let g:go_fmt_command = "gofmt"
 
-let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave = 0
 
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
