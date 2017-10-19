@@ -26,6 +26,7 @@ fi
 DEFAULT_USER="chochoe"
 KEYTIMEOUT=1
 
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 export PIP_DOWNLOAD_CACHE=$HOME/.pip-download-cache
 
