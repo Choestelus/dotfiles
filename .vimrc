@@ -7,23 +7,21 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
-" Plug 'L9'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Yggdroot/indentLine'
 Plug 'lokaltog/vim-easymotion'
 Plug 'ervandew/supertab'
-" Plug 'matchit.zip'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'
 Plug 'tmux-plugins/vim-tmux-focus-events'
+
 " ==== colorschemes ==== "
 Plug 'sjl/badwolf'
 Plug 'fatih/molokai'
 Plug 'rakr/vim-one'
 
 " ==== syntax highlight ==== "
-Plug 'xsbeats/vim-blade'
 Plug 'cespare/vim-toml'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'guns/vim-clojure-highlight'
@@ -31,52 +29,55 @@ Plug 'vim-scripts/paredit.vim'
 
 " ==== languages specific ===="
 Plug 'elzr/vim-json'
-Plug 'fatih/vim-go'
-Plug 'nsf/gocode', {'rtp': 'vim/'}
-Plug 'davidhalter/jedi-vim'
+Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 Plug 'guns/vim-clojure-static'
 Plug 'tpope/vim-fireplace'
 Plug 'tpope/vim-classpath'
 Plug 'tpope/vim-salve'
 
 " ==== Autocomplete ===="
-function! BuildYCM(info)
-  " info is a dictionary with 3 fields
-  " - name:   name of the plugin
-  " - status: 'installed', 'updated', or 'unchanged'
-  " - force:  set on PlugInstall! or PlugUpdate!
-  if a:info.status != 'unchanged' || a:info.force
-    !./install.py --gocode-completer --racer-completer --clang-completer --system-libclang
-  endif
-endfunction
-
-Plug 'Valloric/YouCompleteMe', {'do': function('BuildYCM')}
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
-
 Plug 'Raimondi/delimitMate'
-Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
-Plug 'garbas/vim-snipmate'
-Plug 'honza/vim-snippets'
-Plug 'Shougo/vimproc.vim'
-Plug 'Shougo/unite.vim'
+Plug 'SirVer/ultisnips'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'Shougo/denite.nvim'
 
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+" ==== Plugin order matters ==== "
+Plug 'fatih/vim-go'
+Plug 'vim-syntastic/syntastic'
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'zchee/deoplete-go', { 'do': 'make'}
+endif
 call plug#end()
 
-
-let g:ycm_global_ycm_extra_conf = '~/.vim/ycm-c-semantics.py'
-
+filetype plugin indent on
 " ====== key bindings and configuration ====== "
 set backspace=indent,eol,start
 set fileformat=unix
 
 set autoread
-
+set pyxversion=3
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+" let g:deoplete#disable_auto_complete = 1
+" deoplete-go settings
+let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+let g:deoplete#ignore_sources = {}
+let g:deoplete#ignore_sources._ = ['buffer', 'around']
 " ========= Interface Configuration ========= "
-set t_Co=256
-
+" set t_Co=256
+set completeopt+=noinsert
+" deoplete.nvim recommend
+set completeopt+=noselect
 if (has("termguicolors"))
   set termguicolors
 endif
@@ -93,7 +94,6 @@ set scroll=8
 " set line number and syntax
 set nu
 syntax on
-filetype plugin indent on
 " show line number and command being entered
 set showcmd number
 
@@ -112,13 +112,33 @@ let g:indentLine_noConcealCursor=""
 " let g:indentLine_color_gui = 239
 " let g:indentLine_color_term = 239
 
+let g:SuperTabDefaultCompletionType = "<c-n>"
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 " ===== YCM & preview variables ===== "
-set completeopt=menuone
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_add_preview_to_completeopt = 0
-
+set completeopt=longest,menuone
+" let g:ycm_autoclose_preview_window_after_completion = 1
+" let g:ycm_add_preview_to_completeopt = 0
+" " make YCM compatible with UltiSnips (using supertab)
+" let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+" let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:SuperTabClosePreviewOnPopupClose = 1
+" better key bindings for UltiSnipsExpandTrigger
+" let g:UltiSnipsExpandTrigger = "<tab>"
+" let g:UltiSnipsJumpForwardTrigger = "<tab>"
+" let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <Tab>  pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
+inoremap <expr> <c-@>  pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
 
+" inoremap <expr> <S-Tab>  pumvisible() ? "\<C-p>" : "\<s-tab>"
 " colorscheme
 colorscheme one
 
@@ -145,7 +165,7 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_auto_type_info = 1
-let g:go_fmt_command = "gofmt"
+let g:go_fmt_command = "goimports"
 
 let g:go_metalinter_autosave = 0
 
