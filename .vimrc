@@ -28,6 +28,7 @@ Plug 'guns/vim-clojure-highlight'
 Plug 'vim-scripts/paredit.vim'
 
 " ==== languages specific ===="
+Plug 'rust-lang/rust.vim'
 Plug 'elzr/vim-json'
 Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 Plug 'guns/vim-clojure-static'
@@ -44,6 +45,7 @@ Plug 'Shougo/denite.nvim'
 
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'racer-rust/vim-racer'
 " ==== Plugin order matters ==== "
 Plug 'fatih/vim-go'
 Plug 'vim-syntastic/syntastic'
@@ -54,6 +56,7 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'sebastianmarkow/deoplete-rust'
 endif
 call plug#end()
 
@@ -68,6 +71,8 @@ set pyxversion=3
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 " let g:deoplete#disable_auto_complete = 1
+let g:deoplete#sources#rust#racer_binary='$HOME/.cargo/bin/racer'
+let g:deoplete#sources#rust#rust_source_path='$RUST_SRC_PATH'
 " deoplete-go settings
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
@@ -81,6 +86,10 @@ set completeopt+=noselect
 if (has("termguicolors"))
   set termguicolors
 endif
+
+set hidden
+let g:racer_cmd = "/home/chochoe/.cargo/bin/racer"
+let g:racer_experimental_completer = 1
 
 set t_8b=[48;2;%lu;%lu;%lum
 set t_8f=[38;2;%lu;%lu;%lum
@@ -180,3 +189,9 @@ au FileType go nmap <Leader>s <Plug>(go-implements)
 au FileType go nmap <Leader>i <Plug>(go-info)
 " Rename the identifier under the cursor to a new name
 au FileType go nmap <Leader>e <Plug>(go-rename)
+
+au FileType rust nmap gd <Plug>(rust-def)
+au FileType rust nmap gs <Plug>(rust-def-split)
+au FileType rust nmap gx <Plug>(rust-def-vertical)
+au FileType rust nmap <leader>gd <Plug>(rust-doc)
+
