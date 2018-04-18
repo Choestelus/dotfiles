@@ -4,7 +4,8 @@
 # Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context virtualenv dir vcs)
+# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context virtualenv dir vcs)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history time)
 POWERLEVEL9K_MODE='awesome-fontconfig'
 POWERLEVEL9K_PYTHON_ICON=''
@@ -30,6 +31,7 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 export PIP_DOWNLOAD_CACHE=$HOME/.pip-download-cache
 
+export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python"
 export WORKON_HOME=~/.virtualenvs
 export PIP_VIRTUALENV_BASE=$WORKON_HOME
 source /usr/bin/virtualenvwrapper.sh
@@ -44,6 +46,8 @@ export GOBIN=$GOPATH/bin
 
 export PATH=$PATH:$GOBIN
 
+export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+
 export EDITOR=vim
 export VISUAL=vim
 
@@ -55,5 +59,6 @@ alias gst='git status'
 
 export NVM_LAZY_LOAD=true
 source ~/.zsh-nvm/zsh-nvm.plugin.zsh
+source $HOME/.cargo/env
 
 source <(kubectl completion zsh)
