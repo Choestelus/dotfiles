@@ -45,6 +45,8 @@ export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 
 export PATH=$PATH:$GOBIN
+export ROSWELLPATH=$HOME/.roswell/bin
+export PATH=$PATH:$ROSWELLPATH
 
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
@@ -52,6 +54,7 @@ export EDITOR=vim
 export VISUAL=vim
 
 alias gst='git status'
+alias vi='nvim'
 
 # export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
