@@ -34,7 +34,7 @@ Plug 'vim-scripts/paredit.vim'
 " ==== languages specific ===="
 Plug 'rust-lang/rust.vim'
 Plug 'elzr/vim-json'
-Plug 'mdempsky/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
+Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.local/share/nvim/plugged/gocode/nvim/symlink.sh' }
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'guns/vim-clojure-static'
 Plug 'tpope/vim-fireplace'
@@ -179,7 +179,8 @@ let g:go_highlight_build_constraints = 1
 let g:go_auto_type_info = 1
 let g:go_fmt_command = "goimports"
 
-let g:go_metalinter_autosave = 1
+let g:gometalinter_enabled = ['vet']
+let g:go_metalinter_autosave = 0
 
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
