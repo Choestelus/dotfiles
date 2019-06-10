@@ -28,36 +28,36 @@ Plug 'guns/vim-clojure-highlight'
 Plug 'vim-scripts/paredit.vim'
 
 " ==== languages specific ===="
-Plug 'rust-lang/rust.vim'
-Plug 'elzr/vim-json'
-Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
-Plug 'guns/vim-clojure-static'
-Plug 'tpope/vim-fireplace'
-Plug 'tpope/vim-classpath'
-Plug 'tpope/vim-salve'
+" Plug 'rust-lang/rust.vim'
+" Plug 'elzr/vim-json'
+" Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+" Plug 'guns/vim-clojure-static'
+" Plug 'tpope/vim-fireplace'
+" Plug 'tpope/vim-classpath'
+" Plug 'tpope/vim-salve'
 
 " ==== Autocomplete ===="
-Plug 'Raimondi/delimitMate'
-Plug 'tomtom/tlib_vim'
-Plug 'SirVer/ultisnips'
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'Shougo/denite.nvim'
+" Plug 'Raimondi/delimitMate'
+" Plug 'tomtom/tlib_vim'
+" Plug 'SirVer/ultisnips'
+" Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+" Plug 'Shougo/denite.nvim'
 
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'racer-rust/vim-racer'
+" Plug 'scrooloose/nerdtree'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'racer-rust/vim-racer'
 " ==== Plugin order matters ==== "
-Plug 'fatih/vim-go'
-Plug 'vim-syntastic/syntastic'
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-Plug 'zchee/deoplete-go', { 'do': 'make'}
-Plug 'sebastianmarkow/deoplete-rust'
-endif
+" Plug 'fatih/vim-go'
+" Plug 'vim-syntastic/syntastic'
+" if has('nvim')
+"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" else
+"   Plug 'Shougo/deoplete.nvim'
+"   Plug 'roxma/nvim-yarp'
+"   Plug 'roxma/vim-hug-neovim-rpc'
+" Plug 'zchee/deoplete-go', { 'do': 'make'}
+" Plug 'sebastianmarkow/deoplete-rust'
+" endif
 call plug#end()
 
 filetype plugin indent on
@@ -68,16 +68,16 @@ set fileformat=unix
 set autoread
 set pyxversion=3
 " Use deoplete.
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-" let g:deoplete#disable_auto_complete = 1
-let g:deoplete#sources#rust#racer_binary='$HOME/.cargo/bin/racer'
-let g:deoplete#sources#rust#rust_source_path='$RUST_SRC_PATH'
-" deoplete-go settings
-let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-let g:deoplete#ignore_sources = {}
-let g:deoplete#ignore_sources._ = ['buffer', 'around']
+" let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_smart_case = 1
+" " let g:deoplete#disable_auto_complete = 1
+" let g:deoplete#sources#rust#racer_binary='$HOME/.cargo/bin/racer'
+" let g:deoplete#sources#rust#rust_source_path='$RUST_SRC_PATH'
+" " deoplete-go settings
+" let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+" let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+" let g:deoplete#ignore_sources = {}
+" let g:deoplete#ignore_sources._ = ['buffer', 'around']
 " ========= Interface Configuration ========= "
 " set t_Co=256
 set completeopt+=noinsert
@@ -88,8 +88,8 @@ if (has("termguicolors"))
 endif
 
 set hidden
-let g:racer_cmd = "/home/chochoe/.cargo/bin/racer"
-let g:racer_experimental_completer = 1
+" let g:racer_cmd = "/home/chochoe/.cargo/bin/racer"
+" let g:racer_experimental_completer = 1
 
 set t_8b=[48;2;%lu;%lu;%lum
 set t_8f=[38;2;%lu;%lu;%lum
@@ -126,12 +126,12 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
 " ===== YCM & preview variables ===== "
-set completeopt=longest,menuone
+" set completeopt=longest,menuone
 " let g:ycm_autoclose_preview_window_after_completion = 1
 " let g:ycm_add_preview_to_completeopt = 0
 " " make YCM compatible with UltiSnips (using supertab)
@@ -144,15 +144,15 @@ let g:SuperTabClosePreviewOnPopupClose = 1
 " let g:UltiSnipsJumpForwardTrigger = "<tab>"
 " let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 " inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <expr> <Tab>  pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
-inoremap <expr> <c-@>  pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
+" inoremap <expr> <Tab>  pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
+" inoremap <expr> <c-@>  pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
 
 " inoremap <expr> <S-Tab>  pumvisible() ? "\<C-p>" : "\<s-tab>"
 " colorscheme
 colorscheme one
 
 " ==== Indentations ==== "
-let delimitMate_expand_cr = 1
+" let delimitMate_expand_cr = 1
 
 " set tab stops
 set shiftwidth=4 tabstop=4 softtabstop=4 expandtab
@@ -166,32 +166,32 @@ au FileType yaml setl sw=2 sts=2 et
 au FileType json setl et
 
 " ==== Go Specific ==== "
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_types = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-let g:go_auto_type_info = 1
-let g:go_fmt_command = "goimports"
+" let g:go_highlight_functions = 1
+" let g:go_highlight_methods = 1
+" let g:go_highlight_fields = 1
+" let g:go_highlight_types = 1
+" let g:go_highlight_structs = 1
+" let g:go_highlight_operators = 1
+" let g:go_highlight_build_constraints = 1
+" let g:go_auto_type_info = 1
+" let g:go_fmt_command = "goimports"
 
-let g:go_metalinter_autosave = 0
+" let g:go_metalinter_autosave = 0
 
-au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <leader>c <Plug>(go-coverage-toggle)
+" au FileType go nmap <leader>r <Plug>(go-run)
+" au FileType go nmap <leader>b <Plug>(go-build)
+" au FileType go nmap <leader>t <Plug>(go-test)
+" au FileType go nmap <leader>c <Plug>(go-coverage-toggle)
 
-" Show a list of interfaces which is implemented by the type under your cursor
-au FileType go nmap <Leader>s <Plug>(go-implements)
-" Show type info for the word under your cursor
-au FileType go nmap <Leader>i <Plug>(go-info)
-" Rename the identifier under the cursor to a new name
-au FileType go nmap <Leader>e <Plug>(go-rename)
+" " Show a list of interfaces which is implemented by the type under your cursor
+" au FileType go nmap <Leader>s <Plug>(go-implements)
+" " Show type info for the word under your cursor
+" au FileType go nmap <Leader>i <Plug>(go-info)
+" " Rename the identifier under the cursor to a new name
+" au FileType go nmap <Leader>e <Plug>(go-rename)
 
-au FileType rust nmap gd <Plug>(rust-def)
-au FileType rust nmap gs <Plug>(rust-def-split)
-au FileType rust nmap gx <Plug>(rust-def-vertical)
-au FileType rust nmap <leader>gd <Plug>(rust-doc)
+" au FileType rust nmap gd <Plug>(rust-def)
+" au FileType rust nmap gs <Plug>(rust-def-split)
+" au FileType rust nmap gx <Plug>(rust-def-vertical)
+" au FileType rust nmap <leader>gd <Plug>(rust-doc)
 
