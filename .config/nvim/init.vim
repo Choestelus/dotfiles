@@ -19,6 +19,7 @@ Plug 'ervandew/supertab'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'
 Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'christoomey/vim-tmux-navigator'
 
 " ==== colorschemes ==== "
 Plug 'sjl/badwolf'
