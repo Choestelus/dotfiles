@@ -6,39 +6,41 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
+Plug 'junegunn/vim-easy-align'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Yggdroot/indentLine'
+Plug 'airblade/vim-gitgutter'
 Plug 'lokaltog/vim-easymotion'
-Plug 'ervandew/supertab'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'christoomey/vim-tmux-navigator'
 
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
 " ==== colorschemes ==== "
-Plug 'sjl/badwolf'
-Plug 'fatih/molokai'
+Plug 'Rigellute/rigel'
 Plug 'rakr/vim-one'
+Plug 'ayu-theme/ayu-vim'
+Plug 'joshdick/onedark.vim'
+Plug 'tyrannicaltoucan/vim-quantum'
 
 " ==== syntax highlight ==== "
 Plug 'cespare/vim-toml'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'guns/vim-clojure-highlight'
-Plug 'vim-scripts/paredit.vim'
 
 " ==== languages specific ===="
-Plug 'rust-lang/rust.vim'
 Plug 'elzr/vim-json'
-Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.local/share/nvim/plugged/gocode/nvim/symlink.sh' }
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'guns/vim-clojure-static'
-Plug 'tpope/vim-fireplace'
+" Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.local/share/nvim/plugged/gocode/nvim/symlink.sh' }
+Plug 'fatih/vim-go'
 Plug 'tpope/vim-classpath'
 Plug 'tpope/vim-salve'
 Plug 'elixir-editors/vim-elixir'
@@ -46,65 +48,84 @@ Plug 'slashmili/alchemist.vim'
 
 " ==== Autocomplete ===="
 Plug 'Raimondi/delimitMate'
-Plug 'tomtom/tlib_vim'
-Plug 'SirVer/ultisnips'
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'Shougo/denite.nvim'
 
-Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-rails'
+Plug 'vim-ruby/vim-ruby'
+
+
+Plug 'dense-analysis/ale'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'racer-rust/vim-racer'
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " ==== Plugin order matters ==== "
-Plug 'vim-syntastic/syntastic'
 
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-
-Plug 'zchee/deoplete-go', { 'do': 'make'}
-Plug 'sebastianmarkow/deoplete-rust'
 call plug#end()
 
 filetype plugin indent on
+
+" ========== coc.nvim ========== "
+set cmdheight=2
+set updatetime=300
+set shortmess+=c
+set signcolumn=yes
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Add status line support, for integration with other plugin, checkout `:h coc-status`
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Or use `complete_info` if your vim support it, like:
+" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" ============================== "
+let g:ale_sign_column_always = 1
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+
 " ====== key bindings and configuration ====== "
 set backspace=indent,eol,start
 set fileformat=unix
 
 set autoread
-" set pyxversion=3
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-" let g:deoplete#disable_auto_complete = 1
-let g:deoplete#sources#rust#racer_binary='$HOME/.cargo/bin/racer'
-let g:deoplete#sources#rust#rust_source_path='$RUST_SRC_PATH'
-" deoplete-go settings
-let g:deoplete#sources#go#gocode_binary = '$GOPATH/bin/gocode'
-let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-let g:deoplete#sources#go#pointer = 1
-" let g:deoplete#ignore_sources = {}
-" let g:deoplete#ignore_sources._ = ['buffer', 'around']
 " ========= Interface Configuration ========= "
 " set t_Co=256
-set completeopt+=noinsert
-" deoplete.nvim recommend
-set completeopt+=noselect
-if (has("termguicolors"))
-  set termguicolors
-endif
+set termguicolors
 
 set hidden
-let g:racer_cmd = "/home/chochoe/.cargo/bin/racer"
-let g:racer_experimental_completer = 1
 
 set t_8b=[48;2;%lu;%lu;%lum
 set t_8f=[38;2;%lu;%lu;%lum
 
-set background=dark
 set ruler
 
 " scroll speed
@@ -121,37 +142,22 @@ set encoding=utf-8
 set guifont=Source\ Code\ Pro\ for\ Powerline\ 10,DejaVu\ Sans\ Mono\ for\ Powerline\ 10,DejaVu\ Sans\ Mono\ 10
 
 " airline configurations
-let g:airline_theme='one'
+" let g:rigel_airline=1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#ale#enabled = 1
 let g:airline_powerline_fonts = 1
-set laststatus=2
+let g:airline_theme = 'one'
+" set laststatus=2
 
 " ===== Syntax Configuration ===== "
 let g:vim_json_syntax_conceal = 0
 let g:indentLine_noConcealCursor=""
-" let g:indentLine_color_gui = 239
-" let g:indentLine_color_term = 239
 
-let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 set completeopt=longest,menuone
-" let g:SuperTabDefaultCompletionType = '<C-x><C-o>'
-" let g:SuperTabClosePreviewOnPopupClose = 1
-" better key bindings for UltiSnipsExpandTrigger
-" let g:UltiSnipsExpandTrigger = "<tab>"
-" let g:UltiSnipsJumpForwardTrigger = "<tab>"
-" let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" inoremap <expr> <Tab>  pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
-" inoremap <expr> <c-@>  pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
-
-" inoremap <expr> <S-Tab>  pumvisible() ? "\<C-p>" : "\<s-tab>"
 " colorscheme
 colorscheme one
 
@@ -170,18 +176,74 @@ au FileType yaml setl sw=2 sts=2 et
 au FileType json setl et
 
 " ==== Go Specific ==== "
+let g:go_def_mode = 'gopls'
+let g:go_info_mode = 'gopls'
+
 let g:go_highlight_functions = 1
+let g:go_highlight_function_parameters = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_format_strings = 1
+let g:go_highlight_variable_declarations = 1
+let g:go_highlight_variable_assignments = 1
+
 let g:go_highlight_methods = 1
 let g:go_highlight_fields = 1
 let g:go_highlight_types = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_generate_tags = 1
 let g:go_auto_type_info = 1
-let g:go_fmt_command = "goimports"
+let g:go_fmt_command = 'goimports'
 
 let g:gometalinter_enabled = ['vet']
 let g:go_metalinter_autosave = 0
+"
+" Search
+nnoremap <C-p> :call fzf#run(fzf#wrap({'source': 'fd -t f . $(git rev-parse --show-toplevel)','options': '--preview="bat --color=always {}"'}))<cr>
+"" search by buffer name
+nnoremap <silent> <leader>s :call fzf#run(fzf#wrap({'source': map(range(1, bufnr('$')), 'bufname(v:val)'), 'options': '--preview="bat --color=always {}"'}))<cr>
+"" Pass current word to :Rg when invoke
+nnoremap <silent> <Leader>rg :Rg <C-R><C-W><CR>
+
+nnoremap <silent> <leader>e :call Fzf_dev()<CR>
+" ripgrep
+if executable('rg')
+  let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
+  set grepprg=rg\ --vimgrep
+  command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+endif
+
+"" Easymotion
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+nmap <Leader>w <Plug>(easymotion-overwin-w)
+nmap <Leader>L <Plug>(easymotion-overwin-line)
+
+
+"" map <Space> as <Leader>, this don't change to current leader's key
+"map <Space> <Leader>
+" Remap the leader key to signle quote
+let mapleader = "'"
+" Run commands with semicolon
+nnoremap ; :
+
+" display indent guild
+let g:indent_guides_enable_on_vim_startup = 1
+
+" My Define keymap
+"" OmniComplete on tab - Change <Tab> in InsertMode to Ctrl-X + Ctrl-O
+" imap <Tab> <C-x><C-o>
+map <C-n> :NERDTreeToggle<CR>
+"
+" Buffer
+" close it with out closing window
+command! BD :bn|:bd#
+noremap <Leader>bd :BD<CR>
+
+"" jump between go symbol/function
+nnoremap <leader><C-r> :GoDecls<cr>
 
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
@@ -193,13 +255,7 @@ au FileType go nmap <Leader>s <Plug>(go-implements)
 " Show type info for the word under your cursor
 au FileType go nmap <Leader>i <Plug>(go-info)
 " Rename the identifier under the cursor to a new name
-au FileType go nmap <Leader>e <Plug>(go-rename)
+" au FileType go nmap <Leader>e <Plug>(go-rename)
 
-au FileType rust nmap gd <Plug>(rust-def)
-au FileType rust nmap gs <Plug>(rust-def-split)
-au FileType rust nmap gx <Plug>(rust-def-vertical)
-au FileType rust nmap <leader>gd <Plug>(rust-doc)
-
-
-let $NVIM_PYTHON_LOG_FILE="/tmp/nvim_log"
-let $NVIM_PYTHON_LOG_LEVEL="DEBUG"
+let $NVIM_PYTHON_LOG_FILE='/tmp/nvim_log'
+let $NVIM_PYTHON_LOG_LEVEL='DEBUG'
